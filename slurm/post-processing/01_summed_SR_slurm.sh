@@ -10,6 +10,7 @@
 #SBATCH --mem=300G
 
 module load Anaconda3
+source activate my_env 
 
 TIMES=(35 65)
 SCENARIOS=("rcp26" "rcp60")

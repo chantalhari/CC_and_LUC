@@ -3,7 +3,6 @@
 import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
-import rioxarray
 import numpy as np
 import geopandas as gpd
 import cartopy.crs as ccrs

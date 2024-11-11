@@ -5,10 +5,10 @@ import xarray as xr
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-import geopandas as gpd
+#import geopandas as gpd
 import matplotlib.colors
 scriptsdir = os.getcwd()
-from scipy.interpolate import griddata
+#from scipy.interpolate import griddata
 from functools import reduce
 import itertools
 import argparse
@@ -118,7 +118,6 @@ for taxa in taxas:
                     sumbin_hist_sum[sdm][gcm][taxa].append(sum_bin_hist)
                     sumbin_future_sum[sdm][gcm][taxa].append(sum_bin_future)
 
-                    # Your existing code to process the files goes here
 
                 except FileNotFoundError:
                     # Handle the case where the file is not found
@@ -141,32 +140,35 @@ os.makedirs(output_dir, exist_ok=True)
 for taxa in taxas:
     for sdm in sdms:
         for gcm in gcms:
-            # Concatenate and sum values
-            newvalue_hist_sum_taxa = xr.concat(newvalue_hist_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
-            newvalue_future_sum_taxa = xr.concat(newvalue_future_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
-            sum_bin_hist_sum_taxa = xr.concat(sumbin_hist_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
-            sum_bin_future_sum_taxa = xr.concat(sumbin_future_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
+            if newvalue_hist_sum[sdm][gcm][taxa] and newvalue_future_sum[sdm][gcm][taxa] and sumbin_hist_sum[sdm][gcm][taxa] and sumbin_future_sum[sdm][gcm][taxa]:
+                # Concatenate and sum values
+                newvalue_hist_sum_taxa = xr.concat(newvalue_hist_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
+                newvalue_future_sum_taxa = xr.concat(newvalue_future_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
+                sum_bin_hist_sum_taxa = xr.concat(sumbin_hist_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
+                sum_bin_future_sum_taxa = xr.concat(sumbin_future_sum[sdm][gcm][taxa], dim="species").sum(dim="species")
 
-            # Output file paths
-            newvalue_hist_sum_path = os.path.join(output_dir, f"newvalue_hist_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}.pkl")
-            newvalue_future_sum_path = os.path.join(output_dir, f"newvalue_future_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}.pkl")
-            sum_bin_hist_sum_path = os.path.join(output_dir, f"sum_bin_hist_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}.pkl")
-            sum_bin_future_sum_path = os.path.join(output_dir, f"sum_bin_future_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}.pkl")
+                # Output file paths
+                newvalue_hist_sum_path = os.path.join(output_dir, f"newvalue_hist_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}_qc.pkl")
+                newvalue_future_sum_path = os.path.join(output_dir, f"newvalue_future_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}_qc.pkl")
+                sum_bin_hist_sum_path = os.path.join(output_dir, f"sum_bin_hist_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}_qc.pkl")
+                sum_bin_future_sum_path = os.path.join(output_dir, f"sum_bin_future_sum_{sdm}_{gcm}_{taxa}_{scenario}_{time}_qc.pkl")
 
-            # Write to pickle files
-            with open(newvalue_hist_sum_path, "wb") as f:
-                pickle.dump(newvalue_hist_sum_taxa, f)
+                # Write to pickle files
+                with open(newvalue_hist_sum_path, "wb") as f:
+                    pickle.dump(newvalue_hist_sum_taxa, f)
 
-            with open(newvalue_future_sum_path, "wb") as f:
-                pickle.dump(newvalue_future_sum_taxa, f)
+                with open(newvalue_future_sum_path, "wb") as f:
+                    pickle.dump(newvalue_future_sum_taxa, f)
 
-            with open(sum_bin_hist_sum_path, "wb") as f:
-                pickle.dump(sum_bin_hist_sum_taxa, f)
+                with open(sum_bin_hist_sum_path, "wb") as f:
+                    pickle.dump(sum_bin_hist_sum_taxa, f)
 
-            with open(sum_bin_future_sum_path, "wb") as f:
-                pickle.dump(sum_bin_future_sum_taxa, f)
+                with open(sum_bin_future_sum_path, "wb") as f:
+                    pickle.dump(sum_bin_future_sum_taxa, f)
 
 
+            else:
+                print(f"No data to concatenate for SDM: {sdm}, GCM: {gcm}, Taxa: {taxa}")
 
 
 # Assume you already have the necessary data loaded into these dictionaries

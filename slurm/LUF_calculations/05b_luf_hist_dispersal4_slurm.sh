@@ -10,7 +10,8 @@
 #SBATCH --mem=100G
 
 module load Anaconda3
-
+source activate my_env 
+module load Anaconda3
 # Define arrays of taxas and models
 TAXAS=("Amphibians" "Mammals" "Bird")
 MODELS=("GAM" "GBM")

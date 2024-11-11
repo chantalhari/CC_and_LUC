@@ -20,7 +20,7 @@ TAXA=${TAXAS[$SLURM_ARRAY_TASK_ID / ${#MODELS[@]}]}
 MODEL=${MODELS[$SLURM_ARRAY_TASK_ID % ${#MODELS[@]}]}
 
 
-chmod +x /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_caluclations/06b_luf_hist_dispersal0.py
+chmod +x /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_calculations/06b_luf_hist_dispersal0.py
 
 # Pass the arguments to luf.py
-python3 /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_caluclations/06b_luf_hist_dispersal0.py -m $MODEL -a $TAXA
+python3 /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_calculations/06b_luf_hist_dispersal0.py -m $MODEL -a $TAXA

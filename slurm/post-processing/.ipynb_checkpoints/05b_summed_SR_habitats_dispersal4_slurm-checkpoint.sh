@@ -8,13 +8,11 @@
 #SBATCH --time=95:59:00
 #SBATCH --cpus-per-task=5
 #SBATCH --mem=700G
-
-conda activate my_env
-module purge
+module load Anaconda3
+source activate my_env 
 module load Anaconda3
 
-
-TIMES=(35 65)
+TIMES=(65)
 SCENARIOS=("rcp26" "rcp60")
 
 # Calculate indices based on SLURM_ARRAY_TASK_ID

@@ -9,8 +9,8 @@
 #SBATCH --cpus-per-task=5
 #SBATCH --mem=300G
 
-conda activate my_env
-module purge
+module load Anaconda3
+source activate my_env 
 module load Anaconda3
 
 

@@ -10,6 +10,7 @@
 #SBATCH --mem=300G
 
 module load Anaconda3
+source activate my_env 
 
 # Define arrays of taxas and models
 TAXAS=("Mammals" "Amphibians" "Bird")
@@ -21,8 +22,8 @@ TAXA=${TAXAS[$SLURM_ARRAY_TASK_ID / (${#TIME[@]} * ${#MODELS[@]})]}
 MODEL=${MODELS[($SLURM_ARRAY_TASK_ID / ${#TIME[@]}) % ${#MODELS[@]}]}
 
 
-chmod +x /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_caluclations/01a_luf.py
+chmod +x /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_calculations/01a_luf.py
 
 # Pass the arguments to luf.py
-python3 /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_caluclations/01a_luf.py -t $TIME -m $MODEL -a $TAXA
+python3 /storage/homefs/ch21o450/scripts/climate_Hari_etal_inprep/functions/LUF_calculations/01a_luf.py -t $TIME -m $MODEL -a $TAXA
 
